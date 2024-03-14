@@ -10,6 +10,15 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "HlWebServer",
+            "preLaunchTask": "Clear terminal",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "src/hlweb.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
         }
     ]
 }
