@@ -1,16 +1,28 @@
-# python
-from typing import AsyncGenerator
-
-# fastapi
+# fastapi modules
 from fastapi import Depends
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
 
-# sqlalchemy
+# sqlalchemy modules
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
+# python modules
+from typing import AsyncGenerator
+
+# user modeules
+from core.config import settings
+from lib.logger import jrprint, jrlog
+
+
+
+
 # sqlite db
-DATABASE_URL = "sqlite+aiosqlite:///./test.db"
+databaseUrl = settings.getDatabaseUrl()
+
+# module globals
+engine = create_async_engine(databaseUrl)
+async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
+jrlog("Using database '{}'.".format(databaseUrl))
 
 
 
@@ -22,9 +34,6 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
     pass
 
 
-
-engine = create_async_engine(DATABASE_URL)
-async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 
 
 
