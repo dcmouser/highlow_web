@@ -1,20 +1,20 @@
 # fastapi modules
 from fastapi import Depends
-from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
+from fastapi_users.db import SQLAlchemyUserDatabase
 
 # sqlalchemy modules
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-from sqlalchemy.orm import DeclarativeBase
+
+
+# user modules
+from core.config import settings
+from lib.logger import jrprint
+
+# user models
+from .models import Base, User
 
 # python modules
-from typing import AsyncGenerator
-
-# user modeules
-from core.config import settings
-from lib.logger import jrprint, jrlog
-
-
-
+from typing import AsyncGenerator, Optional
 
 # sqlite db
 databaseUrl = settings.getDatabaseUrl()
@@ -22,16 +22,8 @@ databaseUrl = settings.getDatabaseUrl()
 # module globals
 engine = create_async_engine(databaseUrl)
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
-jrlog("Using database '{}'.".format(databaseUrl))
+jrprint("Using database '{}'.".format(databaseUrl))
 
-
-
-
-class Base(DeclarativeBase):
-    pass
-
-class User(SQLAlchemyBaseUserTableUUID, Base):
-    pass
 
 
 
@@ -50,3 +42,4 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
 
 async def get_user_db(session: AsyncSession = Depends(get_async_session)):
     yield SQLAlchemyUserDatabase(session, User)
+

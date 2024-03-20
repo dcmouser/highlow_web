@@ -16,7 +16,7 @@ import uuid
 
 
 # user modules
-from .dbase import User
+from .models import User
 from .schemas import UserCreate, UserRead, UserUpdate
 from .fapiusermanager import get_jwt_strategy, get_cookie_strategy, get_user_manager
 

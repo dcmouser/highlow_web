@@ -1,14 +1,23 @@
 # fastapi modules
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+
+# for exception handler
+from starlette.responses import Response
+from starlette.requests import Request
+from traceback import print_exception, format_exc
+
 
 # python modules
 from contextlib import asynccontextmanager
 
-# user modules
-from myApp import home, users, admin, dbase, fapiusers, mytest
-from core.config import settings
 
+# user modules
+from app import home, users, admin, fapiusers, mytest
+from core.config import settings
+from lib.logger import jrprint, jrlog, jrUvicornLoggerSetup
+from src.app import models, dbase
 
 
 
@@ -26,6 +35,22 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
+
+# custom exception catcher middleware for logging
+@app.middleware("http")
+async def catch_exceptions_middleware(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except Exception as e:
+        jrlog(e)
+        jrlog(format_exc())
+        print_exception(e)
+        return Response("Internal server error", status_code=500)
+#
+(catch_exceptions_middleware)
+
+
+
 # add fastapi middleware for cores
 corsOrigins = settings.getCorsList()
 app.add_middleware(
@@ -36,6 +61,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+# setup intercepting of uvicorn logs, etc.
+jrUvicornLoggerSetup()
 
 
 

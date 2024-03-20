@@ -4,7 +4,7 @@ from fastapi.templating import Jinja2Templates
 
 # user modules
 from .fapiusers import current_active_user
-from .dbase import User
+from .models import User
 
 # python modules
 from pathlib import Path

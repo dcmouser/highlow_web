@@ -12,10 +12,12 @@ from fastapi_users.db import SQLAlchemyUserDatabase
 # python
 import uuid
 from typing import Optional
+import logging
 
 
 # user modules
-from .dbase import User, get_user_db
+from .models import User
+from .dbase import get_user_db
 
 
 

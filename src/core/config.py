@@ -5,6 +5,8 @@ from typing import List, Optional, Union
 
 class Settings(BaseSettings):
     CORS_LIST: list[str] = ["http://localhost", "http://localhost:4200", "http://localhost:3000", "http://localhost:8080", "http://192.168.0.11:3000"]
+
+    # see also alembic.ini for copy of this for access to this db from alembic database migration updater
     DATABASE_URL: Optional[str] = "sqlite+aiosqlite:///./data/test.db"
 
 
