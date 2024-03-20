@@ -1,0 +1,1 @@
+This was originally created by npm script create_react_app which made its own .git and confused everything.
