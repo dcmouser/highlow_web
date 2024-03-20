@@ -9,5 +9,5 @@ THIS SECTION NEEDS A FULL WRITE UP
 
 Run these two servers that talk to one another:
 
-FASTAPI Back-end web server: \hlweb>npx poetry start
-REACT Front-end web server: \hlweb\frontend\react>npm start
+* FASTAPI Back-end web server: \hlweb>npx poetry start
+* REACT Front-end web server: \hlweb\frontend\react>npm start
