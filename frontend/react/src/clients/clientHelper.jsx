@@ -1,4 +1,7 @@
+// react
 import { useLocation,Navigate } from "react-router-dom"
+
+
 
 
 
@@ -7,6 +10,7 @@ import { useLocation,Navigate } from "react-router-dom"
 export const setJwtToken = (jwtToken)=>{
     console.log("Saving jwtToken: " + jwtToken)
     localStorage.setItem('authToken', jwtToken)
+    //broadcastAuthStateChange(true)
 }
 export const fetchJwtToken = ()=>{
     const jwtToken = localStorage.getItem('authToken')
@@ -14,7 +18,8 @@ export const fetchJwtToken = ()=>{
     return jwtToken
 }
 export const clearJwtToken = ()=>{
-    return localStorage.removeItem('authToken')
+    localStorage.removeItem('authToken')
+    //broadcastAuthStateChange(false)
 }
 
 export function RequireJwtToken({children}){
@@ -29,6 +34,12 @@ export function RequireJwtToken({children}){
 
 
 
+
+// helper
+export const isLoggedIn = ()=> {
+    const jwtToken = fetchJwtToken()
+    return jwtToken && true
+}
 
 
 

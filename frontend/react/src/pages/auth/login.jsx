@@ -8,15 +8,17 @@ import { fetchJwtToken, setJwtToken, clearJwtToken } from "../../clients/clientH
 import { FapiClient } from "../../clients/fapiClient";
 import { JrForm, JrFormInput, JrFormButton, JrNavLink } from "../../components/jr/jrform"
 
-
+// auth provider context helper
+import {useAuth} from "../../clients/authhelper"
  
+
 const Login = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-
+    const { updateIsUserLoggedIn } = useAuth();
 
   const login = async () => {
     // call to back end
@@ -26,6 +28,9 @@ const Login = () => {
         if (response.data.access_token) {
           setJwtToken(response.data.access_token);
           fapiClient.setSuccess("Logged in successfully.", true)
+          // this NEEDS to be called from here since we are a React component
+          updateIsUserLoggedIn(true)
+          //
           navigate("/auth/profile");
         }
       } catch (error) {
@@ -40,9 +45,13 @@ const Login = () => {
     try {
       await fapiClient.postPayload("/auth/jwt/logout")
       fapiClient.setSuccess("Logged out successfully.", true)
+      // this NEEDS to be called from here since we are a React component
+      updateIsUserLoggedIn(false)
+      //
       navigate("/auth/login");
     } catch (error) {
       // ATTN: TODO - Currently the back end throws an error (401) even on "successful" logout
+      updateIsUserLoggedIn(false)
       fapiClient.setError(error.toString())
     }
   };

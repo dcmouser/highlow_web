@@ -1,12 +1,17 @@
+// css for app
 import './App.css';
 
-import React from "react";
-import Navbar from "./components/Navbar/Navbar";
+// react
+import {React,useContext} from "react";
+
+// routers
 import {
     BrowserRouter as Router,
     Routes,
     Route,
 } from "react-router-dom";
+
+// routes
 import Home from "./pages/home/index";
 import About from "./pages/about/index";
 import Login from "./pages/auth/login";
@@ -15,11 +20,40 @@ import Profile from "./pages/auth/profile";
 import PasswordForgot from "./pages/auth/passwordForgot";
 import PasswordReset from "./pages/auth/passwordReset";
 
+// new navbar
+import {NavbarSimple, JrNavLink} from "./components/jr/jrnavbar"
 
-function App() {
-  return (
-      <Router>
-          <Navbar />
+// logged in support
+import {isLoggedIn} from "./clients/clientHelper"
+
+// auth provider context
+import {AuthProvider, AuthContext} from "./clients/authhelper"
+
+
+
+function InnerApp() {
+    // make innerApp re-render when authContext changes
+    useContext(AuthContext)
+
+    // we can load these directly
+    const isloggedin = isLoggedIn();
+    const notloggedin = !isloggedin;
+    // OR we could get them from AuthContext
+
+    return (
+        <Router>
+        <NavbarSimple label="HIGH & LOW">
+            <JrNavLink to="/" activestyle="true"> Home </JrNavLink>
+            <JrNavLink to="/about" activestyle="true"> About </JrNavLink>
+            <JrNavLink to="/auth/login" activestyle="true" hidden={isloggedin}> Login </JrNavLink>
+            <JrNavLink to="/auth/login" activestyle="true" hidden={notloggedin}> Logout </JrNavLink>
+            <JrNavLink to="/auth/register" activestyle="true" hidden={isloggedin}> Register </JrNavLink>
+            <JrNavLink to="/auth/profile" activestyle="true" hidden={notloggedin}> Profile </JrNavLink>
+            <JrNavLink to="/auth/passwordForgot" activestyle="true" hidden={isloggedin}> PasswordForgot </JrNavLink>
+            <JrNavLink to="/auth/passwordReset" activestyle="true" hidden={isloggedin}> PasswordReset </JrNavLink>
+        </NavbarSimple>
+        <br/>
+
           <Routes>
               <Route exact path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -29,8 +63,26 @@ function App() {
               <Route path="/auth/passwordForgot" element={<PasswordForgot />} />
               <Route path="/auth/passwordReset" element={<PasswordReset />} />
           </Routes>
+
       </Router>
   );
 }
+
+
+
+
+// we need to test in order for the auth context to work
+function App() {
+    return (
+      <AuthProvider>
+        <InnerApp/>
+    </AuthProvider>
+  );
+}
+
+
+
+
+
 
 export default App;
