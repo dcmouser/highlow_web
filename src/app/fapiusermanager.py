@@ -16,8 +16,12 @@ import logging
 
 
 # user modules
+from lib.logger import jrprint
+#
 from .models import User
 from .dbase import get_user_db
+#
+from .authHelper import sendSignupEmailVerificationEmail
 
 
 
@@ -32,13 +36,15 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     verification_token_secret = SECRET
 
     async def on_after_register(self, user: User, request: Optional[Request] = None):
-        print(f"User {user.id} has registered.")
+        jrprint(f"User {user.id} has registered.")
+        # send them an email verification
+        sendSignupEmailVerificationEmail(user)
 
     async def on_after_forgot_password(self, user: User, token: str, request: Optional[Request] = None):
-        print(f"User {user.id} has forgot their password. Reset token: {token}")
+        jrprint(f"User {user.id} has forgot their password. Reset token: {token}")
 
     async def on_after_request_verify(self, user: User, token: str, request: Optional[Request] = None):
-        print(f"Verification requested for user {user.id}. Verification token: {token}")
+        jrprint(f"Verification requested for user {user.id}. Verification token: {token}")
 
 
 

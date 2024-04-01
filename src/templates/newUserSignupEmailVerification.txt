@@ -1,0 +1,5 @@
+A new account has been created at {{siteName}} ({{siteUrl}}), using the email address {{userEmail}}.
+
+Before you can login with this account, you need to verify that this is your email address by visiting {{confirmationUrlWithVerificationCode}}, or visit {{confirmationUrlGeneric}} and provide the verification code {{verificationCode}}.
+
+Note: If you did not sign up to our website, you should disregard this email.

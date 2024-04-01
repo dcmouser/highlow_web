@@ -14,10 +14,10 @@ from contextlib import asynccontextmanager
 
 
 # user modules
-from app import home, users, admin, fapiusers, mytest
+from app import home, users, admin, fapiusers
 from core.config import settings
 from lib.logger import jrprint, jrlog, jrUvicornLoggerSetup
-from app import models, dbase
+from src.app import models, dbase
 
 
 
@@ -71,7 +71,6 @@ jrUvicornLoggerSetup()
 app.include_router(home.router, prefix="", tags=["home"])
 app.include_router(admin.router, prefix="/admin", tags=["admin"])
 app.include_router(users.router, prefix="/myusers", tags=["myusers"])
-app.include_router(mytest.router, prefix="/mytest", tags=["mytest"])
 
 # now we add routes from fastapi-users module that provide authorization and authentification
 fapiusers.addRouters(app)

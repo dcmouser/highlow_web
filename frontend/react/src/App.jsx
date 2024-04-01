@@ -50,7 +50,7 @@ function InnerApp() {
             <JrNavLink to="/auth/register" activestyle="true" hidden={isloggedin}> Register </JrNavLink>
             <JrNavLink to="/auth/profile" activestyle="true" hidden={notloggedin}> Profile </JrNavLink>
             <JrNavLink to="/auth/passwordForgot" activestyle="true" hidden={isloggedin}> PasswordForgot </JrNavLink>
-            <JrNavLink to="/auth/passwordReset" activestyle="true" hidden={isloggedin}> PasswordReset </JrNavLink>
+            <JrNavLink to="/auth/passwordReset" activestyle="true" hidden="notactive"> PasswordReset </JrNavLink>
         </NavbarSimple>
         <br/>
 

@@ -28,23 +28,26 @@ export function JrNavLinkSet(props) {
 }
 
 
+
 export function JrNavLink(props) {
-    const { hidden = false } = props;
-    return (
-        <>
-            {!hidden && (
-                <Typography as="li" variant="small" color="blue-gray" className="p-1 font-medium">
-                    <NavLink to={props.to} activestyle="true" className="flex items-center hover:text-blue-500 transition-colors [&.active]:text-blue-800" >
-                        {props.children}
-                    </NavLink>
-                </Typography>
-            )}
-        </>
-    );
+  const { hidden = false } = props;
+  let className = "flex items-center hover:text-blue-500 transition-colors [&.active]:text-blue-800"
+  if (hidden === "notactive") {
+    // notactive state means show it ONLY if we are actually on that page
+    className += " hidden [&.active]:flex"
+  }
+  return (
+      <>
+          {hidden!== true && (
+              <Typography as="li" variant="small" color="blue-gray" className="p-1 font-medium">
+                  <NavLink to={props.to} activestyle="true" className={className} >
+                      {props.children}
+                  </NavLink>
+              </Typography>
+          )}
+      </>
+  );
 }
-
-
-
 
 
 

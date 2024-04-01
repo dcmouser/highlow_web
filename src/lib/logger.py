@@ -99,6 +99,9 @@ def jrException(msg):
 
 
 
+
+
+# ---------------------------------------------------------------------------
 def jrUvicornLoggerSetup():
     class JrLogHandler(logging.StreamHandler):
         def __init__(self )-> None:
@@ -126,3 +129,5 @@ def jrUvicornLoggerSetup():
         parentLogger = logging.getLogger("uvicorn")
         if (parentLogger):
             parentLogger.addHandler(handler)
+# ---------------------------------------------------------------------------
+            
