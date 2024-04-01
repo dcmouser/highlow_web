@@ -2,6 +2,7 @@
 import time
 import io
 import logging
+import os
 
 
 
@@ -25,6 +26,9 @@ def jrprint(*args, **kwargs):
 
     # create log file
     if (moduleLogFile is None):
+        
+        if not os.path.exists("logs"):
+            os.makedirs("logs")
         filePath = 'logs/log_' + time.strftime('%Y%m%d_%H%M%S') + '.txt'
         moduleLogFile = open(filePath, 'a+')
         print('>LOGGING TO: {}..'.format(filePath))
