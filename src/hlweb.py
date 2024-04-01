@@ -17,7 +17,7 @@ from contextlib import asynccontextmanager
 from app import home, users, admin, fapiusers, mytest
 from core.config import settings
 from lib.logger import jrprint, jrlog, jrUvicornLoggerSetup
-from src.app import models, dbase
+from app import models, dbase
 
 
 
